@@ -21,13 +21,9 @@ Frankfurther API -> Extract -> Transform -> Load (Postgres) -> Update CDC Config
 3. **load_to_postgres** - Upserts records using `ON CONFLICT` (no duplicate on re-run)
 4. **update_cdc_config** - Tracks last successful run in `cdc_config.json`
 
-## Screenshots
+## Pipeline Run
 
-### Airflow DAG Visualization
-
-![Currency Pipeline DAG](./screenshots/currency-pipeline-dag.png)
-
-*All pipeline tasks (extract_rates → transform_rates → load_to_postgres → update_cdc_config) executing successfully*
+![Pipeline Success](docs/pipeline-success.png)
 
 ## Key Engineering Decisions
 
