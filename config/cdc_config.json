@@ -1,0 +1,15 @@
+{
+    "currency_pipeline": {
+        "last_run_date": "2026-06-20",
+        "last_loaded_date": "2026-06-20",
+        "base_currency": "USD",
+        "target_currencies": [
+            "EUR",
+            "GBP",
+            "JPY",
+            "SAR",
+            "AED",
+            "TRY"
+        ]
+    }
+}
