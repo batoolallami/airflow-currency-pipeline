@@ -21,6 +21,10 @@ Frankfurther API -> Extract -> Transform -> Load (Postgres) -> Update CDC Config
 3. **load_to_postgres** - Upserts records using `ON CONFLICT` (no duplicate on re-run)
 4. **update_cdc_config** - Tracks last successful run in `cdc_config.json`
 
+## Pipeline Run
+
+![Pipeline Success](docs/pipeline-success.png)
+
 ## Key Engineering Decisions
 
 - **Idempotency**: Unique constraint on (date, base, currency) with `ON CONFLICT DO UPDATE` - running the DAG twice for same date never creates duplicates.
