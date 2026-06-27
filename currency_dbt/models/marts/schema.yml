@@ -1,0 +1,15 @@
+version: 2
+models:
+  - name: mart_daily_rates
+    description: "Daily rates pivoted for easy reporting."
+    columns:
+      - name: rate_date
+        description: "one raw per date"
+        tests:
+          - not_null
+          - unique
+      - name: base_currency
+        description: "The base currency"
+        tests:
+          - not_null
+     

@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: public
+    description: "raw data loaded by Airflow."
+    tables:
+      - name: currency_rates
+        description: "Daily exchange rates from frankfurter API."

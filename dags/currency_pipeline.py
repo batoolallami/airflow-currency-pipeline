@@ -1,8 +1,9 @@
-from airflow.sdk import dag, task
+from airflow.sdk import dag, task,Asset
 from datetime import datetime, timedelta
 import json
 import requests
 
+currency_rates_asset=Asset("currency_rates_daily")
 @dag(
     dag_id="currency_pipeline",
     schedule="@daily",
@@ -63,7 +64,8 @@ def currency_pipeline():
     #-------------load to postgree
     @task.python(
             retries=2,
-            retry_delay=timedelta(minutes=1)
+            retry_delay=timedelta(minutes=1),
+            outlets=[currency_rates_asset]
     )
     def load_to_postgres(records,**kwargs):
         import psycopg2
@@ -109,8 +111,7 @@ INSERT INTO currency_rates (date, base, currency,rate) values (%s,%s,%s,%s) on c
         finally:
             if conn:
                 conn.close()
-                print("connection closed") 
-    
+                print("connection closed")    
     @task.python
     def update_cdc_config(rows_loaded,**kwargs):
         date=kwargs["ds"]

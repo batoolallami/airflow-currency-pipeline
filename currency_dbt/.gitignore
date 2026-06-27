@@ -1,0 +1,7 @@
+
+target/
+dbt_packages/
+logs/
+# dbt profiles contain passwords
+currency_dbt/profiles.yml
+profiles.yml
