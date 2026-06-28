@@ -1,5 +1,6 @@
 from airflow.sdk import dag, task,Asset
 from datetime import datetime, timedelta
+from airflow.operators.bash import BashOperator
 import json
 import requests
 
@@ -129,8 +130,20 @@ INSERT INTO currency_rates (date, base, currency,rate) values (%s,%s,%s,%s) on c
         print(f"CDC updated for {date}")
         print(f"Rows loaded: {rows_loaded}")
 
+    
+    run_dbt=BashOperator(
+        
+        task_id="run_dbt_models",
+        bash_command="cd /opt/airflow/currency_dbt && dbt run"
+    )
+    test_dbt=BashOperator(
+        task_id="test_dbt_models",
+        bash_command="cd /opt/airflow/currency_dbt && dbt test"
+    )
+
     raw =extract_rates()
     cleaned =transform_rates(raw)
     loaded=load_to_postgres(cleaned)
-    update_cdc_config(loaded)
+    cdc=update_cdc_config(loaded)
+    cdc >> run_dbt >> test_dbt
 currency_pipeline()
