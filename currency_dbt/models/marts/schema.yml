@@ -12,4 +12,13 @@ models:
         description: "The base currency"
         tests:
           - not_null
+          
+  - name: mart_daily_rates_incremental
+    description: "incremental version - only processes new data since last run"
+    columns:
+      - name: rate_date
+        tests:
+          - not_null
+          - unique
+           
      
